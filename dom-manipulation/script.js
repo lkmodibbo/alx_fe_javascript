@@ -58,5 +58,15 @@ function addQuote() {
 }
 newQuote.addEventListener("click", showRandomQuote)
 
+function importFromJsonFile(event) {
+    const fileReader = new FileReader();
+    fileReader.onload = function(event) {
+        const importQuotes = JSON.parse(event.target.result);
+        quotes.push(...importQuotes);
+        saveQuotes();
+        alert('Quotes imported successfully!');
+    }
+    fileReader.readAsText(event.target.file[0])
+}
 showRandomQuote();
 createAddQuoteForm();
