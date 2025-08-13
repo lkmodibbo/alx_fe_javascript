@@ -7,6 +7,25 @@ let quotes = [
   { text: "Don't let yesterday take up too much of today", category: "Inspiration" }
 ];
 
+document.getElementById('export-quotes').addEventListener('click', exportQuotes);
+
+function exportQuotes() {
+    const quotesJSON = JSON.stringify(quotes, null, 2); // Convert quotes array to JSON string
+
+    // Create a Blob for download
+    const blob = new Blob([quotesJSON], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+
+    // Create a temporary link
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'quotes.json'; // File name
+    a.click();
+
+    // Cleanup
+    URL.revokeObjectURL(url);
+}
+
 // storage helpers
 function saveQuotes() {
   localStorage.setItem("quotes", JSON.stringify(quotes));
