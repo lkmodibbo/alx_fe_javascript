@@ -12,7 +12,10 @@
        <button id="newQuote">Show New Quote</button>
         <input type="file" id="importFile" accept=".json" onchange="importFromJsonFile(event)" />
           <button id="export-quotes">Export Quotes</button>
-        <!-- <div>
+        <select name="" id="categoryFilter">
+          <option value="all">All Categories</option>
+        </select>
+          <!-- <div>
             <input type="text" id="newQuoteText" placeholder="Enter a new quote" />
             <input type="text" id="newQuoteCategory" placeholder="Enter quote category" />
             <button onclick="addQuote()">Add Quote</button>
