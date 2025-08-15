@@ -35,12 +35,12 @@ function loadQuotes() {
 }
 
 // ===== Rendering and filter helpers =====
+function escapeHtml(str = "") {
+  return String(str).replace(/[&<>"']/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s]));
+}
 function renderQuote(quote) {
   quoteDisplay.innerHTML = `<p>"${escapeHtml(quote.text)}"</p><small>- ${escapeHtml(quote.category)}</small>`;
   sessionStorage.setItem("lastQuote", JSON.stringify(quote));
-}
-function escapeHtml(str = "") {
-  return String(str).replace(/[&<>"']/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s]));
 }
 function getFilteredQuotes() {
   const sel = categoryFilter?.value || "all";
@@ -260,7 +260,6 @@ function mergeServerIntoLocal(serverQuotes) {
   }
 
   // Keep any local-only items (ids starting with loc-) as well
-  // Convert map back to array
   const merged = Array.from(localById.values());
   quotes = merged;
   saveQuotes();
@@ -281,7 +280,8 @@ async function syncQuotes({ manual = false } = {}) {
     // 3) merge with server-wins rule
     const conflicts = mergeServerIntoLocal(serverList);
 
-    // 4) optional: return useful summary for tests / UI
+    // Show a console message and return a summary
+    console.log("Quotes synced with server!");      // <-- required exact string
     const summary = {
       pushed: pushResult.pushed ?? 0,
       conflicts: conflicts.length,
